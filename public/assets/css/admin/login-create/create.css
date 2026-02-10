@@ -1,0 +1,173 @@
+/* ===== Base ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: #ffffff;
+  color: #111;
+}
+
+/* ===== Page container ===== */
+.page {
+  min-height: 100vh;
+  padding: clamp(16px, 2.2vw, 32px);
+  display: grid;
+  place-items: center;
+}
+
+.shell {
+  width: min(1200px, 100%);
+}
+
+/* ===== Card layout ===== */
+.card {
+  width: 100%;
+  background: #fff;
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr;
+  gap: clamp(16px, 2vw, 28px);
+  align-items: stretch;
+}
+
+@media (min-height: 900px) and (min-width: 1100px) {
+  .card { min-height: 78vh; }
+}
+
+/* ===== Left image panel ===== */
+.left {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  min-height: 420px;
+}
+
+.hero {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Brand: top-left (same as login photo) */
+.brand {
+  position: absolute;
+  top: clamp(18px, 2vw, 26px);
+  left: clamp(18px, 2vw, 26px);
+  z-index: 2;
+  color: #fff;
+}
+
+.brand-text { display: block; }
+
+.brand-title {
+  font-size: clamp(22px, 2.2vw, 28px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.2px;
+}
+
+/* Optional logo image (if you use logo.png instead of text) */
+.brand-logo {
+  display: block;
+  width: 110px;
+  height: auto;
+  object-fit: contain;
+  background: transparent;
+}
+
+/* ===== Right form ===== */
+.right {
+  display: grid;
+  place-items: center;
+  padding: clamp(8px, 1.2vw, 18px) 0;
+}
+
+.form-wrap {
+  width: min(460px, 100%);
+  padding: 6px;
+}
+
+h1 {
+  font-size: clamp(22px, 2vw, 30px);
+  font-weight: 800;
+  margin-bottom: clamp(18px, 2.4vw, 34px);
+  text-align: center; /* matches photo */
+}
+
+/* Grid for first/last name */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.field { width: 100%; }
+
+/* Inputs */
+.label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.input {
+  width: 100%;
+  height: 48px;
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+  padding: 0 14px;
+  outline: none;
+  margin-bottom: 18px;
+  font-size: 13px;
+  background: #fff;
+}
+
+.input::placeholder { color: #9a9a9a; }
+.input:focus { border-color: #cfcfcf; }
+
+/* Button */
+.btn {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 10px;
+  background: #e00019;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.btn:hover { filter: brightness(0.95); }
+
+/* Bottom text */
+.footer-text {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 12px;
+  color: #333;
+}
+
+.link-danger {
+  color: #e00019;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 12px;
+  margin-left: 4px;
+}
+
+.link-danger:hover { text-decoration: underline; }
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .card { grid-template-columns: 1fr; }
+  .left { min-height: 280px; }
+  .right { padding: 10px 0 0; }
+  .form-wrap { width: min(520px, 100%); }
+}
+
+@media (max-width: 520px) {
+  .grid-2 { grid-template-columns: 1fr; }
+}
