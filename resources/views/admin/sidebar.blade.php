@@ -55,11 +55,17 @@
         <a class="nav-item" href="#">
           <span class="nav-ic">⚙</span> Account
         </a>
-        <a class="nav-item danger" href="#">
-          <span class="nav-ic">⎋</span> Logout
-        </a>
+       <form action="{{ route('admin.logout') }}" method="POST" class="nav-logout-form">
+    @csrf
+    <button type="submit" class="nav-item danger nav-btn">
+        <span class="nav-ic">⎋</span> Logout
+    </button>
+</form>
+
       </nav>
     </aside>
+
+    
 
     {{-- Main --}}
     <div class="main">

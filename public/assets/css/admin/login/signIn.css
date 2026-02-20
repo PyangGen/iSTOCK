@@ -15,9 +15,7 @@ body {
   place-items: center;
 }
 
-.shell {
-  width: min(1200px, 100%);
-}
+.shell { width: min(1200px, 100%); }
 
 /* ===== Card layout (responsive) ===== */
 .card {
@@ -29,7 +27,6 @@ body {
   align-items: stretch;
 }
 
-/* Make it feel “full” on tall screens like 1920x1200 */
 @media (min-height: 900px) and (min-width: 1100px) {
   .card { min-height: 78vh; }
 }
@@ -39,7 +36,7 @@ body {
   position: relative;
   border-radius: 18px;
   overflow: hidden;
-  min-height: 420px; /* ensures good height even on small screens */
+  min-height: 420px;
 }
 
 .hero {
@@ -64,8 +61,6 @@ body {
   line-height: 1;
 }
 
-
-
 /* ===== Right form ===== */
 .right {
   display: grid;
@@ -82,9 +77,22 @@ h1 {
   font-size: clamp(22px, 2vw, 30px);
   font-weight: 800;
   margin-bottom: clamp(18px, 2.4vw, 34px);
+  text-align: center;
+  color: #1F2E5F
 }
 
-/* Inputs */
+/* ✅ Same as CREATE: spacing controlled by form gap */
+.form {
+  display: grid;
+  gap: 18px;
+}
+
+/* ✅ Same as CREATE: field wrapper */
+.field {
+  width: 100%;
+}
+
+/* Labels */
 .label {
   display: block;
   font-size: 12px;
@@ -93,6 +101,7 @@ h1 {
   color: #444;
 }
 
+/* Inputs */
 .input {
   width: 100%;
   height: 48px;
@@ -100,24 +109,38 @@ h1 {
   border-radius: 10px;
   padding: 0 14px;
   outline: none;
-  margin-bottom: 18px;
   font-size: 13px;
   background: #fff;
+  margin-bottom: 0; /* ✅ remove margin-bottom, gap handles spacing */
 }
 
 .input::placeholder { color: #9a9a9a; }
 .input:focus { border-color: #cfcfcf; }
 
+/* ✅ Create-style error text */
+.error-text {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #e3342f;
+  line-height: 1.35;
+}
+
+/* ✅ Create-style invalid border */
+.is-invalid {
+  border: 1px solid #e3342f !important;
+}
+
 /* Forgot password */
 .row-right {
   display: flex;
   justify-content: flex-end;
-  margin-top: -4px;
-  margin-bottom: 18px;
+  margin-top: 0;
+  margin-bottom: 0; /* ✅ gap handles spacing */
 }
 
 .link-danger {
-  color: #e00019;
+  color: #1F2E5F;
   text-decoration: none;
   font-weight: 800;
   font-size: 12px;
@@ -126,22 +149,35 @@ h1 {
 .link-danger:hover { text-decoration: underline; }
 
 /* Button */
-.btn {
+
+.btn{
   width: 100%;
   height: 52px;
   border: none;
   border-radius: 10px;
-  background: #e00019;
+  background: #8A96B8;     /* ✅ default */
   color: #fff;
   font-weight: 500;
   cursor: pointer;
+  margin-top: 4px;
+  transition: background .2s ease, filter .2s ease, transform .05s ease;
 }
 
-.btn:hover { filter: brightness(0.95); }
+.btn.is-active{
+  background: #1F2E5F;     /* ✅ active */
+}
+
+.btn.is-active:hover{
+  filter: brightness(0.95);
+}
+
+.btn:active{
+  transform: translateY(1px);
+}
 
 /* Bottom text */
 .footer-text {
-  margin-top: 18px;
+  margin-top: 0; /* ✅ gap handles spacing */
   text-align: center;
   font-size: 12px;
   color: #333;
@@ -149,20 +185,71 @@ h1 {
 
 .footer-text a { margin-left: 4px; }
 
+/* ===== Success Modal ===== */
+.modal-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-box{
+  background: #fff;
+  width: 360px;
+  max-width: 90%;
+  padding: 28px 24px;
+  border-radius: 14px;
+  text-align: center;
+  animation: fadeInScale .25s ease;
+}
+
+.modal-box h2{
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #1F2E5F;
+}
+
+.modal-box p{
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.modal-box button{
+  width: 100%;
+  height: 44px;
+  border: none;
+  border-radius: 8px;
+  background: #1F2E5F;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.modal-box button:hover{
+  filter: brightness(.95);
+}
+
+@keyframes fadeInScale{
+  from { opacity: 0; transform: scale(.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
 /* ===== Responsive: stack on smaller screens ===== */
 @media (max-width: 900px) {
-  .card {
-    grid-template-columns: 1fr;
-  }
+  .card { grid-template-columns: 1fr; }
 
   .left {
     min-height: 280px;
     margin-bottom: 10px;
   }
 
-  .right {
-    padding: 10px 0 0;
-  }
+  .right { padding: 10px 0 0; }
+
+  .form-wrap { width: min(520px, 100%); }
 }
 
 @media (max-width: 420px) {

@@ -66,6 +66,20 @@ body{
   font-size: 12px;
   margin: 14px 10px 8px;
 }
+/* Make logout button look exactly like nav-item link */
+.nav-logout-form{
+  margin: 0;
+}
+
+.nav-btn{
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+}
+
 .nav-item{
   display: flex;
   align-items: center;
