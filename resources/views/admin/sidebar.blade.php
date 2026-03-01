@@ -10,6 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="{{ asset('assets/css/admin/sidebar.css') }}">
+
+  @stack('styles')
 </head>
 
 <body>
@@ -32,7 +34,7 @@
 
 
         <a class="nav-item {{ request()->routeIs('admin.products') ? 'active' : '' }}"
-           href="{{ route('admin.products') }}">
+           href="{{ route('admin.products.index') }}">
           <span class="nav-ic">▦</span> Products
         </a>
 

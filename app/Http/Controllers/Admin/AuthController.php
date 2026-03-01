@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
@@ -11,8 +11,9 @@ use PHPMailer\PHPMailer\Exception;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AdminVerificationMail;
 use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
 
-class AdminAuthController extends Controller
+class AuthController extends Controller
 {
   public function showCreate()
   {

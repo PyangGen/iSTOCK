@@ -1,0 +1,273 @@
+/* TABLE IMAGE */
+.table-img{
+    width:40px;
+    height:40px;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+/* BADGE */
+.badge{
+    background:#e0f2fe;
+    color:#0369a1;
+    padding:4px 8px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:600;
+}
+
+/* LEFT SLIDE MODAL */
+/* ========================= */
+/* RIGHT SLIDE MODAL */
+/* ========================= */
+
+/* OVERLAY BACKDROP */
+.right-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.35);
+    backdrop-filter:blur(0.5px);
+    opacity:0;
+    visibility:hidden;
+    transition:all .3s ease;
+    z-index:998;
+}
+
+.right-overlay.open{
+    opacity:1;
+    visibility:visible;
+}
+
+/* SLIDE PANEL */
+.right-modal{
+    position:fixed;
+    top:0;
+    right:-450px;
+    width:420px;
+    height:100vh;
+    background:#ffffff;
+    box-shadow:-10px 0 40px rgba(0,0,0,0.15);
+    transition:all .4s ease;
+    z-index:999;
+    overflow-y:auto;
+}
+
+.right-modal.open{
+    right:0;
+}
+
+.modal-content{
+    padding:20px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.modal-content form{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.modal-content input,
+.modal-content textarea,
+.modal-content select{
+    padding:8px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    font-size:14px;
+}
+
+.full-btn{
+    margin-top:15px;
+}
+
+/* MOBILE RESPONSIVE */
+@media(max-width:768px){
+
+    .right-modal{
+        width:100%;
+    }
+
+    .table{
+        font-size:12px;
+    }
+
+    .table th,
+    .table td{
+        padding:8px;
+    }
+
+    .table-img{
+        width:30px;
+        height:30px;
+    }
+}
+
+/* ========================= */
+/* RECEIPT CENTER MODAL */
+/* ========================= */
+
+.center-modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(0.5px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0;
+    visibility:hidden;
+    transition:all .3s ease;
+    z-index:1000;
+}
+
+.center-modal.open{
+    opacity:1;
+    visibility:visible;
+}
+
+/* Modal Box */
+.modal-box{
+    background:#ffffff;
+    width:450px;
+    max-width:95%;
+    border-radius:14px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.15);
+    padding:25px;
+    transform:scale(0.9);
+    transition:all .3s ease;
+    max-height:90vh;
+    overflow-y:auto;
+}
+
+.center-modal.open .modal-box{
+    transform:scale(1);
+}
+
+/* Header */
+.modal-box .modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    border-bottom:1px solid #f1f1f1;
+    padding-bottom:10px;
+}
+
+.modal-box .modal-header h3{
+    font-size:18px;
+    font-weight:600;
+    color:#1f2937;
+}
+
+.modal-box .modal-header button{
+    background:none;
+    border:none;
+    font-size:18px;
+    cursor:pointer;
+    color:#6b7280;
+    transition:.2s;
+}
+
+.modal-box .modal-header button:hover{
+    color:#ef4444;
+}
+
+/* Form Styling */
+.modal-box form{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.modal-box label{
+    font-size:13px;
+    font-weight:600;
+    color:#374151;
+}
+
+.modal-box input,
+.modal-box select{
+    padding:10px;
+    border:1px solid #e5e7eb;
+    border-radius:8px;
+    font-size:14px;
+    transition:.2s;
+    background:#fafafa;
+}
+
+.modal-box input:focus,
+.modal-box select:focus{
+    outline:none;
+    border-color:#3b82f6;
+    background:#ffffff;
+    box-shadow:0 0 0 2px rgba(59,130,246,0.15);
+}
+
+/* File Input Special Style */
+.modal-box input[type="file"]{
+    padding:8px;
+    background:#fff;
+}
+
+/* Submit Button */
+.modal-box .btn-success{
+    margin-top:15px;
+    padding:10px;
+    border-radius:8px;
+    font-weight:600;
+    font-size:14px;
+}
+
+/* MOBILE */
+@media(max-width:480px){
+    .modal-box{
+        width:95%;
+        padding:18px;
+    }
+}
+input.error-input {
+    border: 1px solid red;
+}
+
+.badge-success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.badge-warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.badge-orange {
+    background: #ffe5b4;
+    color: #8a4b08;
+}
+
+.badge-danger {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.product-name small {
+    font-size: 12px;
+    opacity: 0.7;
+}
+.clickable-row {
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.clickable-row:hover {
+    background-color: #f5f7fa;
+}
+
+.modal-body p {
+    margin: 8px 0;
+}
