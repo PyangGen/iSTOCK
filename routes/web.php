@@ -4,10 +4,34 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ReceiptController;
+use App\Http\Controllers\Admin\GoogleAuthController;
 Route::prefix('admin')->name('admin.')->group(function () {
 
+  // Landing
+     Route::view('/landing', 'admin.landing.landing')->name('landing');
+    Route::get('/set-language/{lang}', function ($lang) {
+
+        $allowed = [
+            'en','es','fr','de','zh','ja','ko','ar','hi','ru','pt','it',
+            'tl','ceb','ilo','hil','bik','war','pang','kap','mrn','tau'
+        ];
+
+        if(in_array($lang, $allowed)){
+            session(['locale' => $lang]);
+            app()->setLocale($lang);
+        }
+
+        return redirect()->route('admin.landing');
+
+    })->name('set-language');
 
     // Login
+    Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])
+        ->name('google.redirect');
+
+    Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])
+        ->name('google.callback');
+
     Route::get('/login', [AuthController::class, 'showSignIn'])->name('login.signIn');
     Route::post('/login', [AuthController::class, 'signIn'])->name('signIn.store');
     Route::view('/login/eemail', 'admin.login.eemail')->name('login.eemail');

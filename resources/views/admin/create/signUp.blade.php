@@ -1,3 +1,9 @@
+@extends('layouts.app')
+
+@section('title','Admin Login')
+
+@section('content')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,8 +127,14 @@
 
   <!-- ✅ Button with default disabled -->
  <button type="submit" class="btn" id="createBtn">Create Account</button>
-
-
+<!-- Divider -->
+<div class="auth-divider">
+    <span>Or, Sign Up with</span>
+</div>
+<a href="{{ route('admin.google.redirect') }}" class="google-btn">
+    <img src="https://developers.google.com/identity/images/g-logo.png">
+    <span>Sign Up with Google</span>
+</a>
   <p class="footer-text">
     Already have an account?
     <a href="{{ route('admin.login.signIn') }}" class="link-danger">Sign in</a>
@@ -254,3 +266,4 @@
 
 </body>
 </html>
+@endsection

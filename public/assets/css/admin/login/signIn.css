@@ -39,27 +39,96 @@ body {
   min-height: 420px;
 }
 
-.hero {
+/* ===== Onboarding Carousel (Left Panel) ===== */
+.onboard {
+  position: absolute;
+  inset: 0;
+}
+
+.onboard-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.01);
+  transition: opacity .35s ease, transform .35s ease;
+  pointer-events: none;
+}
+
+.onboard-slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.onboard-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.brand {
+/* overlay positions heading + text + dots like your sample */
+.onboard-overlay {
   position: absolute;
-  top: clamp(18px, 2vw, 26px);
-  left: clamp(18px, 2vw, 26px);
-  color: #fff;
-  z-index: 2;
-  letter-spacing: 0.3px;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: clamp(18px, 2vw, 26px);
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.05) 0%,
+    rgba(255,255,255,0.35) 40%,
+    rgba(255,255,255,0.85) 100%
+  );
 }
 
-.brand-title {
-  font-size: clamp(22px, 2.2vw, 28px);
-  font-weight: 800;
-  line-height: 1;
+/* Top heading */
+.onboard-title {
+  justify-self: center;
+  text-align: center;
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 900;
+  letter-spacing: .6px;
+  color: #111;
+  margin-top: clamp(4px, 1vw, 10px);
 }
+
+/* Bottom text */
+.onboard-text {
+  align-self: end;
+  justify-self: center;
+  text-align: center;
+  width: min(420px, 90%);
+  font-size: 13px;
+  line-height: 1.55;
+  color: #333;
+  margin-bottom: 44px; /* leaves space for dots */
+}
+
+/* Dots (bottom center) */
+.onboard-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(0,0,0,0.22);
+  cursor: pointer;
+  padding: 0;
+}
+
+.dot.is-active {
+  background: #1F2E5F;
+}
+
 
 /* ===== Right form ===== */
 .right {
@@ -255,4 +324,69 @@ h1 {
 @media (max-width: 420px) {
   .input { height: 46px; }
   .btn { height: 50px; }
+}
+
+/* ===== Divider ===== */
+
+.auth-divider{
+  display:flex;
+  align-items:center;
+  margin:18px 0;
+  font-size:13px;
+  color:#555;
+}
+
+.auth-divider::before,
+.auth-divider::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:#dcdcdc;
+}
+
+.auth-divider span{
+  padding:0 14px;
+}
+
+
+/* ===== Google Button ===== */
+
+.google-btn{
+  width:100%;
+  height:52px;
+  border-radius:10px;
+  border:1px solid #cfcfcf;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:500;
+  color:#333;
+  background:#fff;
+  transition:all .2s ease;
+}
+
+.google-btn img{
+  width:30px;
+  height:30px;
+}
+
+.google-btn:hover{
+  background:#f7f7f7;
+}
+/* Hide Google translate top bar completely */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+body > .skiptranslate,
+.goog-te-gadget,
+.goog-tooltip,
+.goog-text-highlight {
+    display: none !important;
+}
+
+body {
+    top: 0 !important;
+    position: static !important;
 }

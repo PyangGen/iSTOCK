@@ -7,11 +7,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Admin extends Authenticatable
 {
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'email',
-        'password'
-    ];
+    'first_name',
+    'last_name',
+    'email',
+    'password',
+    'google_id',
+    'avatar',
+    'is_verified'
+];
 
     protected $hidden = [
         'password',

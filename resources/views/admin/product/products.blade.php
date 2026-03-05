@@ -9,111 +9,108 @@
 @section('content')
 
     <div class="card">
-        <div class="card-head">
-            <div class="card-title">Product List</div>
+    <div class="card-head">
+        <div class="card-title">Product List</div>
 
-            <div class="toolbar">
-                <div class="input">
-                    <span>🔎</span>
-                    <input type="text" placeholder="Search product">
-                </div>
-
-                <!-- CENTER RECEIPT BUTTON -->
-                <button class="btn btn-success" onclick="openReceiptModal()">
-                    🧾 Receipt
-                </button>
-
-                <button class="btn btn-primary" onclick="openModal()">
-                    ＋ Add Product
-                </button>
+        <div class="toolbar">
+            <div class="input">
+                <span>🔎</span>
+                <input type="text" placeholder="Search product">
             </div>
+
+            <button class="btn btn-success" onclick="openReceiptModal()">🧾 Receipt</button>
+
+            <button class="btn btn-danger" onclick="openDeleteModal()">🗑 Delete Selected</button>
+
+            <button class="btn btn-primary" onclick="openModal()">＋ Add Product</button>
         </div>
-
-      <div class="table-wrap">
-    <table class="table">
-        <thead>
-            <tr>
-                <th width="40px">
-                    <input type="checkbox">
-                </th>
-                <th>Product</th>
-                <th>Category</th>
-                <th>Qty</th>
-                <th>Unit</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th width="80px">Edit</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($products as $product)
-
-            @php
-                $qty = $product->pd_qty ?? 0;
-
-                if ($qty == 0) {
-                    $status = 'Out of Stock';
-                    $statusClass = 'badge-danger';
-                } elseif ($qty <= 5) {
-                    $status = 'Critical';
-                    $statusClass = 'badge-warning';
-                } elseif ($qty <= 15) {
-                    $status = 'Low Stock';
-                    $statusClass = 'badge-orange';
-                } else {
-                    $status = 'In Stock';
-                    $statusClass = 'badge-success';
-                }
-            @endphp
-
-            <tr class="clickable-row"
-                onclick="showDetails(this)"
-                data-name="{{ $product->pd_name }}"
-                data-code="{{ $product->pd_code }}"
-                data-category="{{ $product->category->category_name ?? '-' }}"
-                data-qty="{{ $product->pd_qty ?? 0 }}"
-                data-unit="{{ $product->pd_unit }}"
-                data-price="₱{{ number_format($product->pd_price, 2) }}"
-                data-desc="{{ $product->pd_desc ?? '-' }}"
-            >
-                <td onclick="event.stopPropagation();">
-                    <input type="checkbox" value="{{ $product->pd_id }}">
-                </td>
-
-                <td>
-                    <strong>{{ $product->pd_name }}</strong><br>
-                    <small class="text-muted">{{ $product->pd_code }}</small>
-                </td>
-
-                <td>
-                    <span class="badge">
-                        {{ $product->category->category_name ?? '-' }}
-                    </span>
-                </td>
-
-                <td>{{ $qty }}</td>
-                <td>{{ $product->pd_unit }}</td>
-                <td>₱{{ number_format($product->pd_price, 2) }}</td>
-
-                <td>
-                    <span class="badge {{ $statusClass }}">
-                        {{ $status }}
-                    </span>
-                </td>
-
-                <td onclick="event.stopPropagation();">
-                    <a href="{{ route('admin.products.edit', $product->pd_id) }}" 
-                       class="btn btn-edit">
-                        Edit
-                    </a>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
     </div>
 
+<div class="table-wrap">
+<table class="table">
+    <thead>
+        <tr>
+            <th width="40px">
+                <input type="checkbox" id="selectAll">
+            </th>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Qty</th>
+            <th>Unit</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th width="80px">Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($products as $product)
+
+        @php
+            $qty = $product->pd_qty ?? 0;
+
+            if ($qty == 0) {
+                $status = 'Out of Stock';
+                $statusClass = 'badge-danger';
+            } elseif ($qty <= 5) {
+                $status = 'Critical';
+                $statusClass = 'badge-warning';
+            } elseif ($qty <= 15) {
+                $status = 'Low Stock';
+                $statusClass = 'badge-orange';
+            } else {
+                $status = 'In Stock';
+                $statusClass = 'badge-success';
+            }
+        @endphp
+
+        <tr class="clickable-row"
+            onclick="showDetails(this)"
+            data-name="{{ $product->pd_name }}"
+            data-code="{{ $product->pd_code }}"
+            data-category="{{ $product->category->category_name ?? '-' }}"
+            data-qty="{{ $product->pd_qty ?? 0 }}"
+            data-unit="{{ $product->pd_unit }}"
+            data-price="₱{{ number_format($product->pd_price, 2) }}"
+            data-desc="{{ $product->pd_desc ?? '-' }}"
+        >
+            <td onclick="event.stopPropagation();">
+                <input type="checkbox"
+                       class="rowCheckbox"
+                       value="{{ $product->pd_id }}">
+            </td>
+
+            <td>
+                <strong>{{ $product->pd_name }}</strong><br>
+                <small class="text-muted">{{ $product->pd_code }}</small>
+            </td>
+
+            <td>
+                <span class="badge">
+                    {{ $product->category->category_name ?? '-' }}
+                </span>
+            </td>
+
+            <td>{{ $qty }}</td>
+            <td>{{ $product->pd_unit }}</td>
+            <td>₱{{ number_format($product->pd_price, 2) }}</td>
+
+            <td>
+                <span class="badge {{ $statusClass }}">
+                    {{ $status }}
+                </span>
+            </td>
+
+            <td onclick="event.stopPropagation();">
+                <a href="{{ route('admin.products.edit', $product->pd_id) }}"
+                   class="btn btn-edit">Edit</a>
+            </td>
+        </tr>
+
+        @endforeach
+    </tbody>
+</table>
+</div>
+</div>
 
     {{-- RIGHT SLIDING MODAL --}}
     <div class="right-overlay" id="rightOverlay">
@@ -212,7 +209,10 @@
                 </select>
 
                 <label>Delivery Date</label>
-                <input type="date" name="deliver_date">
+                <input type="date" name="deliver_date" class="@error('deliver_date') error-input @enderror">
+                @error('deliver_date')
+                    <small style="color:red;">{{ $message }}</small>
+                @enderror
 
                 <label>Receipt Photo 1</label>
                 <input type="file" name="photo_one" class="@error('photo_one') error-input @enderror">
@@ -254,21 +254,49 @@
     </div>
 </div>
 
+{{-- DELETE CONFIRMATION MODAL --}}
 <div class="center-modal" id="deleteModal">
     <div class="modal-box">
         <div class="modal-header">
-            <h3>Confirm Delete</h3>
+            <h3>Confirm Archive</h3>
             <button onclick="closeDeleteModal()">✖</button>
         </div>
         <div class="modal-body">
-            <p>Are you sure you want to archive this product?</p>
+            <p id="deleteMessage">
+                Are you sure you want to archive selected product(s)?
+            </p>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-danger" id="confirmDeleteBtn">Yes, Archive</button>
-            <button class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+            <button class="btn btn-danger" id="confirmDeleteBtn">
+                Yes, Archive
+            </button>
+            <button class="btn btn-secondary" onclick="closeDeleteModal()">
+                Cancel
+            </button>
         </div>
     </div>
 </div>
+
+{{-- WARNING MODAL --}}
+<div class="center-modal" id="warningModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Notice</h3>
+            <button onclick="closeWarningModal()">✖</button>
+        </div>
+        <div class="modal-body">
+            <p id="warningMessage">
+                Please select at least one product.
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" onclick="closeWarningModal()">
+                OK
+            </button>
+        </div>
+    </div>
+</div>
+
     <script>
         function openModal() {
             document.getElementById('productModal').classList.add('open');
@@ -303,26 +331,30 @@ function closeDetailsModal() {
     document.getElementById('detailsModal').classList.remove('open');
 }
 
-let productIdToDelete = null;
 
-document.querySelectorAll('.table tbody tr').forEach(row => {
-    const checkbox = row.querySelector('input[type="checkbox"]');
 
-    // Checkbox click
-    checkbox.addEventListener('click', function(e) {
-        e.stopPropagation(); // Prevent row click
-        productIdToDelete = this.value;
-        openDeleteModal();
-    });
 
-    // Optional: row click also can trigger delete modal (if you want)
-    // row.addEventListener('dblclick', function() {
-    //     productIdToDelete = this.querySelector('input[type="checkbox"]').value;
-    //     openDeleteModal();
-    // });
+// ==========================
+// SELECT ALL
+// ==========================
+document.getElementById('selectAll').addEventListener('change', function() {
+    document.querySelectorAll('.rowCheckbox')
+        .forEach(cb => cb.checked = this.checked);
 });
 
+// ==========================
+// OPEN DELETE MODAL
+// ==========================
 function openDeleteModal() {
+    let selected = document.querySelectorAll('.rowCheckbox:checked');
+
+    if (selected.length === 0) {
+    openWarningModal("Please select at least one product.");
+    return;
+}
+    document.getElementById('deleteMessage')
+        .innerText = `Are you sure you want to archive ${selected.length} selected product(s)?`;
+
     document.getElementById('deleteModal').classList.add('open');
 }
 
@@ -330,23 +362,41 @@ function closeDeleteModal() {
     document.getElementById('deleteModal').classList.remove('open');
 }
 
-// Send AJAX request to archive
-document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+function openWarningModal(message) {
+    document.getElementById('warningMessage').innerText = message;
+    document.getElementById('warningModal').classList.add('open');
+}
+
+function closeWarningModal() {
+    document.getElementById('warningModal').classList.remove('open');
+}
+// ==========================
+// CONFIRM ARCHIVE (BULK)
+// ==========================
+document.getElementById('confirmDeleteBtn')
+.addEventListener('click', function() {
+
+    let selected = document.querySelectorAll('.rowCheckbox:checked');
+    let ids = [];
+
+    selected.forEach(cb => ids.push(cb.value));
+
     fetch("{{ route('admin.products.archive') }}", {
-        method: 'POST',
+        method: "POST",
         headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
         },
-        body: JSON.stringify({ id: productIdToDelete })
+        body: JSON.stringify({ ids: ids })
     })
     .then(res => res.json())
     .then(data => {
-        if(data.success) {
+        if (data.success) {
             closeDeleteModal();
-            location.reload(); // reload table
+            location.reload();
         }
     });
+
 });
     </script>
   {{-- Open Product Modal Only If Product Has Errors --}}
@@ -360,7 +410,13 @@ document.getElementById('confirmDeleteBtn').addEventListener('click', function()
 
 
 {{-- Open Receipt Modal Only If Receipt Has Errors --}}
-@if ($errors->has('supplier_name') || $errors->has('photo_one') || $errors->has('photo_two'))
+@if (
+    $errors->has('supplier_name') ||
+    $errors->has('product_source') ||
+    $errors->has('deliver_date') ||
+    $errors->has('photo_one') ||
+    $errors->has('photo_two')
+)
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         openReceiptModal();

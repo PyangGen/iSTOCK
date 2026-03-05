@@ -9,17 +9,22 @@ use App\Models\Receipt;
 class ReceiptController extends Controller
 {
     //
-    public function store(Request $request)
+public function store(Request $request)
 {
     $request->validate([
-    'supplier_name' => 'required',
-    'photo_one' => 'required|image',
-    'photo_two' => 'required|image',
-], [
-    'supplier_name.required' => 'The supplier name field is required.',
-    'photo_one.required' => 'Receipt photo 1 is required.',
-    'photo_two.required' => 'Receipt photo 2 is required.',
-]);
+        'supplier_name' => 'required',
+        'product_source' => 'required',
+        'deliver_date' => 'required|date', // ✅ ADD THIS
+        'photo_one' => 'required|image',
+        'photo_two' => 'required|image',
+    ], [
+        'supplier_name.required' => 'The supplier name field is required.',
+        'product_source.required' => 'The product source field is required.',
+        'deliver_date.required' => 'The delivery date field is required.', // ✅ ADD MESSAGE
+        'deliver_date.date' => 'Please enter a valid delivery date.',
+        'photo_one.required' => 'Receipt photo 1 is required.',
+        'photo_two.required' => 'Receipt photo 2 is required.',
+    ]);
 
     $photo1 = $request->file('photo_one')->store('receipts', 'public');
     $photo2 = $request->file('photo_two')->store('receipts', 'public');

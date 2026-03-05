@@ -1,3 +1,9 @@
+@extends('layouts.app')
+
+@section('title','Admin Login')
+
+@section('content')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,15 +25,74 @@
 
         <!-- LEFT IMAGE -->
         <aside class="left">
-          <div class="brand">
-            <div class="brand-title">iSTOCK</div>
-          </div>
+         
+       <div class="onboard" id="onboard">
+  <!-- Slide 1 -->
+  <div class="onboard-slide is-active">
+    <img
+      class="onboard-img"
+      src="{{ asset('assets/images/admin/login-create/os.jpg') }}"
+      alt="slide 1"
+    />
 
-          <img
-            class="hero"
-            src="{{ asset('assets/images/admin/login-create/login.jpg') }}"
-            alt="istock"
-          />
+    <div class="onboard-overlay">
+      <h2 class="onboard-title">YOUR ONLINE STOREFRONT</h2>
+      <p class="onboard-text">
+        Start taking online orders. Get a fully loaded e-commerce site that can be shared with your customers.
+      </p>
+
+      <div class="onboard-dots" aria-label="Onboarding dots">
+        <button type="button" class="dot is-active" aria-label="Go to slide 1" data-slide="0"></button>
+        <button type="button" class="dot" aria-label="Go to slide 2" data-slide="1"></button>
+        <button type="button" class="dot" aria-label="Go to slide 3" data-slide="2"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 2 -->
+  <div class="onboard-slide">
+    <img
+      class="onboard-img"
+      src="{{ asset('assets/images/admin/login-create/t.jpg') }}"
+      alt="slide 2"
+    />
+
+    <div class="onboard-overlay">
+      <h2 class="onboard-title">TRACK INVENTORY FAST</h2>
+      <p class="onboard-text">
+        Monitor stock-in and stock-out in real time, avoid shortages, and stay organized.
+      </p>
+
+      <div class="onboard-dots" aria-label="Onboarding dots">
+        <button type="button" class="dot" aria-label="Go to slide 1" data-slide="0"></button>
+        <button type="button" class="dot is-active" aria-label="Go to slide 2" data-slide="1"></button>
+        <button type="button" class="dot" aria-label="Go to slide 3" data-slide="2"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3 -->
+  <div class="onboard-slide">
+    <img
+      class="onboard-img"
+      src="{{ asset('assets/images/admin/login-create/sd.jpg') }}"
+      alt="slide 3"
+    />
+
+    <div class="onboard-overlay">
+      <h2 class="onboard-title">SMART REPORTS</h2>
+      <p class="onboard-text">
+        Generate clear summaries and make better decisions using simple, readable reports.
+      </p>
+
+      <div class="onboard-dots" aria-label="Onboarding dots">
+        <button type="button" class="dot" aria-label="Go to slide 1" data-slide="0"></button>
+        <button type="button" class="dot" aria-label="Go to slide 2" data-slide="1"></button>
+        <button type="button" class="dot is-active" aria-label="Go to slide 3" data-slide="2"></button>
+      </div>
+    </div>
+  </div>
+</div>
         </aside>
 
         <!-- RIGHT FORM -->
@@ -76,6 +141,16 @@
   </div>
 
  <button type="submit" class="btn" id="signInBtn">Login</button>
+ <!-- Divider -->
+<div class="auth-divider">
+    <span>Or, Sign In with</span>
+</div>
+
+<!-- Google Login -->
+<a href="{{ route('admin.google.redirect') }}" class="google-btn">
+    <img src="https://developers.google.com/identity/images/g-logo.png">
+    <span>Sign In with Google</span>
+</a>
 
   <p class="footer-text">
     Don’t have an account?
@@ -176,7 +251,87 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+
+(function () {
+  const root = document.getElementById('onboard');
+  if (!root) return;
+
+  const slides = Array.from(root.querySelectorAll('.onboard-slide'));
+  let index = 0;
+  let timer = null;
+
+  function setActive(i) {
+    index = (i + slides.length) % slides.length;
+
+    slides.forEach((s, si) => {
+      s.classList.toggle('is-active', si === index);
+
+      // update dots inside each slide (kept per-slide so layout stays identical)
+      const dots = Array.from(s.querySelectorAll('.dot'));
+      dots.forEach((d) => d.classList.remove('is-active'));
+      if (dots[index]) dots[index].classList.add('is-active');
+    });
+  }
+
+  function start() {
+    stop();
+    timer = setInterval(() => setActive(index + 1), 3500);
+  }
+
+  function stop() {
+    if (timer) clearInterval(timer);
+    timer = null;
+  }
+
+  // dot clicks (event delegation)
+  root.addEventListener('click', (e) => {
+    const btn = e.target.closest('.dot');
+    if (!btn) return;
+    const to = Number(btn.dataset.slide);
+    if (!Number.isNaN(to)) {
+      setActive(to);
+      start();
+    }
+  });
+
+  // pause on hover (nice UX)
+  root.addEventListener('mouseenter', stop);
+  root.addEventListener('mouseleave', start);
+
+  setActive(0);
+  start();
+
+  // swipe support
+// swipe support
+let startX = 0;
+let endX = 0;
+
+root.addEventListener('touchstart', (e) => {
+  stop(); // pause autoplay while swiping
+  startX = e.touches[0].clientX;
+});
+
+root.addEventListener('touchend', (e) => {
+  endX = e.changedTouches[0].clientX;
+  handleSwipe();
+});
+
+function handleSwipe() {
+  const diff = startX - endX;
+
+  if (Math.abs(diff) < 50) return;
+
+  if (diff > 0) {
+    setActive(index + 1); // swipe left
+  } else {
+    setActive(index - 1); // swipe right
+  }
+
+  start(); // restart autoplay
+}
+})();
 </script>
 
 </body>
 </html>
+@endsection

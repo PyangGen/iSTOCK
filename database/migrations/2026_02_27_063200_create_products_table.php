@@ -12,26 +12,20 @@ return new class extends Migration {
 
             // Basic Info
             $table->string('pd_photo')->nullable();
-            $table->string('pd_name', 150);
-            $table->text('pd_desc')->nullable();
-            $table->string('pd_code', 100)->unique();
+            $table->string('pd_name', 150)->unique();
+$table->string('pd_code', 100)->nullable()->unique();
+$table->decimal('pd_price', 10, 2);
 
-            // Stock Info
-            $table->integer('pd_qty')->default(0);
-            $table->string('pd_unit')->default('pcs'); 
-            $table->decimal('pd_cost_price', 10, 2)->nullable();
-            $table->decimal('pd_price', 10, 2);
-
-            $table->foreignId('category_id')->constrained('categories');
-            // Supplier Info
-            $table->string('pd_supplier')->nullable();
-
-            // Dates
-           
-            $table->date('pd_expiry_date')->nullable();
-            $table->timestamp('pd_updateDate')->nullable();
-
-            $table->timestamps();
+// optional fields
+$table->text('pd_desc')->nullable();
+$table->integer('pd_qty')->default(0);
+$table->string('pd_unit')->default('pcs'); 
+$table->decimal('pd_cost_price', 10, 2)->nullable();
+$table->foreignId('category_id')->nullable()->constrained('categories')->nullOnDelete();
+$table->string('pd_supplier')->nullable();
+$table->date('pd_expiry_date')->nullable();
+$table->timestamp('pd_updateDate')->nullable();
+$table->timestamps();
         });
     }
 

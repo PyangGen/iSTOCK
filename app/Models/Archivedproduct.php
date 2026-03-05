@@ -12,13 +12,16 @@ class ArchivedProduct extends Model
     protected $table = 'archived_products';
 
     protected $fillable = [
-        'pd_name',
-        'pd_code',
-        'category_id',
-        'pd_qty',
-        'pd_unit',
-        'pd_price',
-        'pd_desc',
-        'pd_photo'
-    ];
+    'pd_photo',
+    'pd_name',
+    'pd_code',
+    'pd_desc',
+    'pd_qty',
+    'pd_unit',
+    'pd_cost_price',
+    'pd_price',
+    'category_id',
+    'pd_supplier',
+    'pd_expiry_date',
+];
 }

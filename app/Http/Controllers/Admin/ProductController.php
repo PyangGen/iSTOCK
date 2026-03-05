@@ -7,7 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Models\ArchivedProduct;
-
+use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
     // ===============================
@@ -54,19 +54,19 @@ class ProductController extends Controller
         }
 
         Product::create([
-            'pd_photo' => $photoPath,
-            'pd_name' => $request->pd_name,
-            'pd_desc' => $request->pd_desc,
-            'pd_code' => $request->pd_code,
-            'pd_qty' => $request->pd_qty,
-            'pd_unit' => $request->pd_unit,
-            'pd_cost_price' => $request->pd_cost_price,
-            'pd_price' => $request->pd_price,
-            'category_id' => $request->category_id,
-            'pd_supplier' => $request->pd_supplier,
-            'pd_expiry_date' => $request->pd_expiry_date,
-            'pd_updateDate' => now(),
-        ]);
+    'pd_photo' => $photoPath,
+    'pd_name' => $request->pd_name,
+    'pd_desc' => $request->pd_desc,
+    'pd_code' => $request->pd_code,
+    'pd_qty' => $request->pd_qty ?? 0,
+    'pd_unit' => $request->pd_unit ?? 'pcs',
+    'pd_cost_price' => $request->pd_cost_price,
+    'pd_price' => $request->pd_price,
+    'category_id' => $request->category_id, // can be null
+    'pd_supplier' => $request->pd_supplier,
+    'pd_expiry_date' => $request->pd_expiry_date,
+    'pd_updateDate' => now(),
+]);
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Product added successfully.');
@@ -136,24 +136,40 @@ class ProductController extends Controller
     }
 
 
-    public function archive(Request $request)
+public function archive(Request $request)
 {
-    $product = Product::findOrFail($request->id);
+    $ids = $request->ids;
 
-    // Move product to archive
-    ArchivedProduct::create([
-        'pd_name' => $product->pd_name,
-        'pd_code' => $product->pd_code,
-        'category_id' => $product->category_id,
-        'pd_qty' => $product->pd_qty,
-        'pd_unit' => $product->pd_unit,
-        'pd_price' => $product->pd_price,
-        'pd_desc' => $product->pd_desc,
-        'pd_photo' => $product->pd_photo
-    ]);
+    if (!$ids || count($ids) == 0) {
+        return response()->json(['success' => false]);
+    }
 
-    // Delete from original table
-    $product->delete();
+    DB::transaction(function () use ($ids) {
+
+        $products = Product::whereIn('pd_id', $ids)->get();
+
+        foreach ($products as $product) {
+
+            ArchivedProduct::create([
+                'pd_photo'        => $product->pd_photo,
+                'pd_name'         => $product->pd_name,
+                'pd_code'         => $product->pd_code,
+                'pd_desc'         => $product->pd_desc,
+                'pd_qty'          => $product->pd_qty,
+                'pd_unit'         => $product->pd_unit,
+                'pd_cost_price'   => $product->pd_cost_price,
+                'pd_price'        => $product->pd_price,
+                'category_id'     => $product->category_id,
+                'pd_supplier'     => $product->pd_supplier,
+                'pd_expiry_date'  => $product->pd_expiry_date,
+                'created_at'      => now(),
+                'updated_at'      => now(),
+            ]);
+        }
+
+        // Delete all at once (cleaner)
+        Product::whereIn('pd_id', $ids)->delete();
+    });
 
     return response()->json(['success' => true]);
 }
