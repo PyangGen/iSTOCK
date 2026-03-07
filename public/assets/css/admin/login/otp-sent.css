@@ -265,3 +265,18 @@ html, body { height: 100%; }
     height:48px;
   }
 }
+/* Hide Google translate top bar completely */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+body > .skiptranslate,
+.goog-te-gadget,
+.goog-tooltip,
+.goog-text-highlight {
+    display: none !important;
+}
+
+body {
+    top: 0 !important;
+    position: static !important;
+}
+

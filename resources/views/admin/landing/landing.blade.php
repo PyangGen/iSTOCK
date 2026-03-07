@@ -53,7 +53,7 @@
 
     <!-- Buttons -->
     <div class="btn-wrapper">
-        <a href="{{ route('admin.create.signUp') }}" class="btn-custom btn-green">
+        <a href="{{ route('admin.intro') }}" class="btn-custom btn-green">
           {{ __('landing.new_user') }}
         </a>
 

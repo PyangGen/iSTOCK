@@ -1,3 +1,11 @@
+@extends('layouts.app')
+
+@section('title','Admin Login')
+
+@section('content')
+
+
+
 @php
 $expiresAtRaw = session('admin_forgot_data.expires_at');
   $expiresAt = $expiresAtRaw
@@ -339,3 +347,4 @@ $expiresAtRaw = session('admin_forgot_data.expires_at');
 
 </body>
 </html>
+@endsection

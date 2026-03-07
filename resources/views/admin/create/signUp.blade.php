@@ -24,20 +24,74 @@
       <div class="card">
 
         <!-- LEFT IMAGE -->
-        <aside class="left">
-          <div class="brand">
-            {{-- <img src="{{ asset('assets/images/admin/login-create/logo.png') }}" class="brand-logo" alt="iSTOCK" /> --}}
-            <div class="brand-text">
-              <div class="brand-title">iSTOCK</div>
-            </div>
-          </div>
+      <aside class="left">
+  <div class="onboard" id="onboard">
+    <!-- Slide 1 -->
+    <div class="onboard-slide is-active">
+      <img
+        class="onboard-img"
+        src="{{ asset('assets/images/admin/login-create/sm.jpg') }}"
+        alt="slide 1"
+      />
 
-          <img
-            class="hero"
-            src="{{ asset('assets/images/admin/login-create/create.jpg') }}"
-            alt="Ice cream"
-          />
-        </aside>
+      <div class="onboard-overlay">
+        <h2 class="onboard-title">iSTOCK FOR SMALL STORES</h2>
+<p class="onboard-text">
+   Manage products and inventory easily for small store operations.
+</p>
+
+        <div class="onboard-dots" aria-label="Onboarding dots">
+          <button type="button" class="dot is-active" aria-label="Go to slide 1" data-slide="0"></button>
+          <button type="button" class="dot" aria-label="Go to slide 2" data-slide="1"></button>
+          <button type="button" class="dot" aria-label="Go to slide 3" data-slide="2"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="onboard-slide">
+      <img
+        class="onboard-img"
+        src="{{ asset('assets/images/admin/login-create/smrr.jpg') }}"
+        alt="slide 2"
+      />
+
+      <div class="onboard-overlay">
+        <h2 class="onboard-title">SMART STOCK MONITORING</h2>
+<p class="onboard-text">
+  Track stock-in and stock-out in real time with better accuracy.
+</p>
+
+        <div class="onboard-dots" aria-label="Onboarding dots">
+          <button type="button" class="dot" aria-label="Go to slide 1" data-slide="0"></button>
+          <button type="button" class="dot is-active" aria-label="Go to slide 2" data-slide="1"></button>
+          <button type="button" class="dot" aria-label="Go to slide 3" data-slide="2"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="onboard-slide">
+      <img
+        class="onboard-img"
+        src="{{ asset('assets/images/admin/login-create/cs.jpg') }}"
+        alt="slide 3"
+      />
+
+      <div class="onboard-overlay">
+       <h2 class="onboard-title">SIMPLE SALES AND REPORTS</h2>
+<p class="onboard-text">
+  Generate receipts and view clear sales summaries quickly.
+</p>
+        <div class="onboard-dots" aria-label="Onboarding dots">
+          <button type="button" class="dot" aria-label="Go to slide 1" data-slide="0"></button>
+          <button type="button" class="dot" aria-label="Go to slide 2" data-slide="1"></button>
+          <button type="button" class="dot is-active" aria-label="Go to slide 3" data-slide="2"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>
 
         <!-- RIGHT FORM -->
         <section class="right">
@@ -260,6 +314,81 @@
 
   // initial state for old() values
   setActiveState();
+})();
+
+(function () {
+  const root = document.getElementById('onboard');
+  if (!root) return;
+
+  const slides = Array.from(root.querySelectorAll('.onboard-slide'));
+  let index = 0;
+  let timer = null;
+
+  function setActive(i) {
+    index = (i + slides.length) % slides.length;
+
+    slides.forEach((s, si) => {
+      s.classList.toggle('is-active', si === index);
+
+      const dots = Array.from(s.querySelectorAll('.dot'));
+      dots.forEach((d) => d.classList.remove('is-active'));
+      if (dots[index]) dots[index].classList.add('is-active');
+    });
+  }
+
+  function start() {
+    stop();
+    timer = setInterval(() => setActive(index + 1), 3500);
+  }
+
+  function stop() {
+    if (timer) clearInterval(timer);
+    timer = null;
+  }
+
+  root.addEventListener('click', (e) => {
+    const btn = e.target.closest('.dot');
+    if (!btn) return;
+
+    const to = Number(btn.dataset.slide);
+    if (!Number.isNaN(to)) {
+      setActive(to);
+      start();
+    }
+  });
+
+  root.addEventListener('mouseenter', stop);
+  root.addEventListener('mouseleave', start);
+
+  let startX = 0;
+  let endX = 0;
+
+  root.addEventListener('touchstart', (e) => {
+    stop();
+    startX = e.touches[0].clientX;
+  });
+
+  root.addEventListener('touchend', (e) => {
+    endX = e.changedTouches[0].clientX;
+    handleSwipe();
+  });
+
+  function handleSwipe() {
+    const diff = startX - endX;
+
+    if (Math.abs(diff) < 50) return;
+
+    if (diff > 0) {
+      setActive(index + 1);
+    } else {
+      setActive(index - 1);
+    }
+
+    start();
+  }
+
+  setActive(0);
+  start();
 })();
 </script>
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ReceiptController;
 use App\Http\Controllers\Admin\GoogleAuthController;
+use App\Http\Controllers\Admin\DemoSaleController;
 Route::prefix('admin')->name('admin.')->group(function () {
 
   // Landing
@@ -25,6 +26,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     })->name('set-language');
 
+    Route::get('/intro', [DemoSaleController::class, 'intro'])->name('intro');
+    Route::get('/productsSale', [DemoSaleController::class, 'products'])->name('products');
+    Route::get('/review', [DemoSaleController::class, 'review'])->name('review');
+    Route::get('/payment', [DemoSaleController::class, 'payment'])->name('payment');
+    Route::get('/receipt', [DemoSaleController::class, 'receipt'])->name('receipt');
     // Login
     Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])
         ->name('google.redirect');
