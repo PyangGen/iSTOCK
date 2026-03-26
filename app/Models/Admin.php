@@ -20,4 +20,8 @@ class Admin extends Authenticatable
         'password',
         'remember_token',
     ];
+    public function businessInfo()
+{
+    return $this->hasOne(\App\Models\BusinessInfo::class);
+}
 }

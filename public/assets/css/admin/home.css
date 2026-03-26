@@ -1,0 +1,82 @@
+/* Bottom Navigation Container */
+.bottom-nav {
+  position: fixed;
+  bottom: 16px; /* 👈 add space from bottom */
+  left: 55%; /* fix centering */
+  transform: translateX(-50%);
+  
+  height: 60px;
+  background: var(--card);
+  border: 1px solid var(--line); /* full border for floating look */
+  
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  
+  z-index: 50;
+  max-width: 500px;
+  width: calc(100% - 24px); /* 👈 adds left/right spacing */
+  
+  border-radius: 14px; /* smoother floating look */
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  flex: 1;
+  padding: 6px 0;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+/* Hover style */
+.nav-btn:hover {
+  background: #f3f6ff;
+  color: var(--blue2);
+}
+
+/* ACTIVE = SAME AS HOVER */
+.nav-btn.active {
+  background: #f3f6ff;
+  color: var(--blue2);
+}
+
+/* ICON STYLE */
+.nav-btn span.material-symbols-outlined {
+  font-size: 24px;
+  margin-bottom: 2px;
+  display: block;
+}
+/* Mobile Responsive Only */
+@media (max-width: 768px) {
+  .bottom-nav {
+    left: 12px;
+    right: 12px;
+    bottom: 10px;
+    transform: none;
+    width: auto;
+    max-width: none;
+    border-radius: 14px;
+    height: 64px;
+  }
+  .nav-btn {
+    font-size: 11px;
+    padding: 6px 0;
+  }
+
+  .nav-btn span.material-symbols-outlined {
+    font-size: 22px;
+    margin-bottom: 1px;
+  }
+
+  .nav-label {
+    font-size: 10px;
+    line-height: 1.1;
+  }
+}

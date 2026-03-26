@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\AdminVerificationMail;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use App\Models\BusinessInfo;
 
 class AuthController extends Controller
 {
@@ -186,7 +187,7 @@ public function signIn(Request $request)
     Auth::guard('admin')->login($admin);
     $request->session()->regenerate();
 
-    return redirect()->route('admin.dashboard');
+    return redirect()->route('admin.login.info');
 }
 public function logout(Request $request)
 {
@@ -354,6 +355,54 @@ public function updatePassword(Request $request)
 
     return redirect()->route('admin.login.signIn')
         ->with('success', 'Password updated successfully. You can now login.');
+}
+public function showBusinessInfo()
+{
+    $admin = Auth::guard('admin')->user();
+
+    if (!$admin) {
+        return redirect()->route('admin.login.signIn');
+    }
+
+    return view('admin.login.info', [
+        'businessInfo' => $admin->businessInfo
+    ]);
+}
+
+public function storeBusinessInfo(Request $request)
+{
+    $admin = Auth::guard('admin')->user();
+
+    if (!$admin) {
+        return redirect()->route('admin.login.signIn');
+    }
+
+    $validated = $request->validate([
+        'business_type'   => ['required', 'string', 'max:150'],
+        'business_name'   => ['required', 'string', 'max:150'],
+        'country_code'    => ['nullable', 'string', 'max:10'],
+        'country_name'    => ['nullable', 'string', 'max:120'],
+        'phone_ist_code'  => ['nullable', 'string', 'max:20'],
+        'mobile_no'       => ['nullable', 'string', 'max:30'],
+    ], [
+        'business_type.required' => 'Please select a business type.',
+        'business_name.required' => 'Please enter your business name.',
+    ]);
+
+    BusinessInfo::updateOrCreate(
+        ['admin_id' => $admin->id],
+        [
+            'business_type'       => $validated['business_type'],
+            'business_name'       => $validated['business_name'],
+            'phone_country_code'  => $validated['country_code'] ?? null,
+            'phone_ist_code'      => $validated['phone_ist_code'] ?? null,
+            'mobile_no'           => $validated['mobile_no'] ?? null,
+            'country_name'        => $validated['country_name'] ?? null,
+        ]
+    );
+
+    return redirect()->route('admin.home.today')
+    ->with('success', 'Business information saved successfully.');
 }
 }
 

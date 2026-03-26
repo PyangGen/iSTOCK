@@ -1,3 +1,5 @@
+  <!-- At the top inside <head> -->
+<link rel="stylesheet" href="{{ asset('assets/admin/home.css') }}">
   @extends('admin.sidebar')
 
   @section('title', 'iStock | Dashboard')
@@ -123,4 +125,5 @@
     </div>
 
   </div>
+  @include('admin.home')  {{-- this will render the bottom nav --}}
   @endsection

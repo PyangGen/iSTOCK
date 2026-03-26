@@ -37,7 +37,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])
         ->name('google.callback');
+    Route::get('/business-info', [AuthController::class, 'showBusinessInfo'])
+    ->middleware('auth:admin')
+    ->name('login.info');
 
+Route::post('/business-info', [AuthController::class, 'storeBusinessInfo'])
+    ->middleware('auth:admin')
+    ->name('login.info.store');
     Route::get('/login', [AuthController::class, 'showSignIn'])->name('login.signIn');
     Route::post('/login', [AuthController::class, 'signIn'])->name('signIn.store');
     Route::view('/login/eemail', 'admin.login.eemail')->name('login.eemail');
@@ -63,8 +69,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/resend-code', [AuthController::class, 'resendCode'])->name('resend-code');
 
     // Admin pages
-    Route::view('/dashboard', 'admin.dashboard')->middleware('auth:admin')->name('dashboard');
+
     Route::view('/sidebar', 'admin.sidebar')->name('sidebar');
+    Route::view('/home', 'admin.home')->name('home');
+    Route::view('/home/today', 'admin.home.today.today')->name('home.today');
+    Route::view('/home/reports', 'admin.home.reports.reports')->name('home.reports');
+    Route::view('/home/today/receipt-preview', 'admin.home.today.receipt-preview')->name('home.today.receipt-preview');
     Route::resource('/products', ProductController::class);
     Route::post('/receipts/store', [ReceiptController::class, 'store'])->name('receipts.store');
     Route::post('/products/archive', [ProductController::class, 'archive'])

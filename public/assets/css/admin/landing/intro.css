@@ -14,7 +14,8 @@ body {
     background: #eef3ff;
     color: #1d2433;
     margin: 0;
-    overflow: hidden; /* desktop no scroll */
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 .demo-page {
     width: 100%;
@@ -1009,6 +1010,10 @@ body {
         right: 0;
         bottom: 20px;
     }
+     .guide-open {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
 }
 @media (min-width: 992px) {
     .receipt-card.receipt-animate {
@@ -1211,5 +1216,691 @@ body {
     .orb-1,
     .orb-2 {
         display: none;
+    }
+
+    .payment-guide-card {
+        width: calc(100vw - 32px);
+        max-width: 300px;
+        padding: 16px 14px 14px;
+    }
+
+    .payment-guide-card h3 {
+        font-size: 15px;
+    }
+
+    .payment-guide-card p {
+        font-size: 12.5px;
+    }
+
+    .payment-guide-arrow {
+        left: 30px;
+        top: -24px;
+        height: 20px;
+    }
+
+    .payment-guide-arrow::before {
+        top: 14px;
+    }
+     .payment-guide-card .payment-guide-arrow[style*="bottom"] {
+        top: auto !important;
+        bottom: -24px !important;
+        transform: rotate(180deg);
+    }
+
+    .payment-guide-card .payment-guide-arrow[style*="bottom"]::before {
+        top: 14px;
+    }
+    .payment-guide-card.guide-card-below .payment-guide-arrow {
+        top: -24px;
+        bottom: auto;
+        transform: none;
+    }
+
+    .payment-guide-card.guide-card-above .payment-guide-arrow {
+        top: auto;
+        bottom: -24px;
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes demoEarthquake {
+    0% { transform: translate(0,0); }
+    5% { transform: translate(-3px,2px); }
+    10% { transform: translate(3px,-2px); }
+    15% { transform: translate(-4px,2px); }
+    20% { transform: translate(4px,-2px); }
+    25% { transform: translate(-3px,1px); }
+    30% { transform: translate(3px,-1px); }
+    35% { transform: translate(-2px,1px); }
+    40% { transform: translate(2px,-1px); }
+    45% { transform: translate(-1px,1px); }
+    50% { transform: translate(0,0); }
+
+    /* pause from 50% → 100% (2 seconds pause) */
+    100% { transform: translate(0,0); }
+}
+
+.demo-earthquake {
+    animation: demoEarthquake 2s infinite;
+}
+#demoSaleBtn:hover {
+    animation: none;
+}
+
+.qty-badge{
+    position:absolute;
+    bottom:10px;
+    right:10px;
+    background:#01377d;
+    color:#fff;
+    font-weight:800;
+    padding:6px 10px;
+    border-radius:10px;
+    font-size:14px;
+    display:none;
+}
+
+.btn-disabled{
+    background:#c9c9c9;
+    color:#666;
+    cursor:not-allowed;
+}
+
+.btn-active{
+    background:#26b170;
+    color:#fff;
+}
+@keyframes coffeeQuake{
+0%{transform:translate(0)}
+5%{transform:translate(-4px,2px)}
+10%{transform:translate(4px,-2px)}
+15%{transform:translate(-5px,2px)}
+20%{transform:translate(5px,-2px)}
+25%{transform:translate(-4px,1px)}
+30%{transform:translate(4px,-1px)}
+35%{transform:translate(-3px,1px)}
+40%{transform:translate(3px,-1px)}
+45%{transform:translate(-2px,1px)}
+50%{transform:translate(0)}
+100%{transform:translate(0)}
+}
+
+.best-seller-card{
+animation:coffeeQuake 4s infinite;
+}
+
+/* guide overlay */
+.payment-guide-overlay {
+    position: fixed;
+    inset: 0;
+    background: transparent;
+    z-index: 9998;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .25s ease, visibility .25s ease;
+}
+
+.payment-guide-overlay.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* remove old white frame look */
+.payment-guide-spotlight {
+    position: fixed;
+    border-radius: 24px;
+    background: transparent;
+    border: 4px solid #ffffff;
+    box-shadow:
+        0 0 0 9999px rgba(18, 22, 33, 0.72),
+        0 0 0 6px rgba(255, 255, 255, 0.10);
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.payment-guide-card {
+    position: fixed;
+    width: min(280px, calc(100vw - 32px));
+   
+    color: #fff;
+    border-radius: 0;
+    padding: 18px 16px 14px;
+    z-index: 10002;
+}
+
+.payment-guide-card h3 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    line-height: 1.15;
+    font-weight: 500;
+}
+
+.payment-guide-card p {
+    margin: 0 0 14px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: rgba(255,255,255,0.92);
+}
+
+.payment-guide-arrow {
+    position: absolute;
+    top: -28px;
+    left: 36px;
+    width: 2px;
+    height: 24px;
+    border-left: 2px dashed #fff;
+}
+
+.payment-guide-arrow::before {
+    content: "";
+    position: absolute;
+    top: 18px;
+    left: -5px;
+    width: 8px;
+    height: 8px;
+    border-left: 2px dashed #fff;
+    border-bottom: 2px dashed #fff;
+    transform: rotate(-45deg);
+}
+
+.guide-btn {
+    min-width: 96px;
+    height: 38px;
+    border: none;
+    border-radius: 4px;
+    background: #4f79ff;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(79, 121, 255, 0.26);
+}
+
+.guide-open {
+    overflow-x: hidden;
+}
+
+
+.payment-guide-card.guide-card-below .payment-guide-arrow {
+    top: -28px;
+    bottom: auto;
+}
+
+.payment-guide-card.guide-card-above .payment-guide-arrow {
+    top: auto;
+    bottom: -24px;
+    transform: rotate(180deg);
+}
+
+
+.intro-guide-overlay {
+    position: fixed;
+    inset: 0;
+    background: transparent;
+    z-index: 9998;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: .25s ease;
+}
+.intro-guide-overlay.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+.intro-guide-spotlight {
+    position: fixed;
+    border-radius: 16px;
+    box-shadow:
+        inset 0 0 0 3px #fff,
+        0 0 0 9999px rgba(18, 22, 33, 0.72);
+    z-index: 9999;
+    pointer-events: none;
+    box-sizing: border-box;
+}
+.intro-guide-card {
+    position: fixed;
+    width: 280px;
+    max-width: calc(100vw - 32px);
+    color: #fff;
+    padding: 18px 16px 14px;
+    z-index: 10002;
+}
+.intro-guide-arrow {
+    position: absolute;
+    left: 28px;
+    width: 2px;
+    height: 24px;
+    border-left: 2px dashed #fff;
+}
+.intro-guide-arrow::before {
+    content: "";
+    position: absolute;
+    top: 18px;
+    left: -5px;
+    width: 8px;
+    height: 8px;
+    border-left: 2px dashed #fff;
+    border-bottom: 2px dashed #fff;
+    transform: rotate(-45deg);
+}
+.intro-guide-card-below .intro-guide-arrow {
+    top: -28px;
+}
+.intro-guide-card-above .intro-guide-arrow {
+    top: auto;
+    bottom: -24px;
+    transform: rotate(180deg);
+}
+.intro-guide-btn {
+    min-width: 96px;
+    height: 38px;
+    border: none;
+    border-radius: 4px;
+    background: #4f79ff;
+    color: #fff;
+    font-weight: 700;
+}
+.intro-guide-target {
+    position: relative;
+    z-index: 10001 !important;
+    transform: none !important;
+    animation: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+.intro-guide-open {
+    overflow-x: hidden;
+}
+.intro-guide-dim {
+    opacity: 0.35;
+    filter: grayscale(25%);
+}
+@media (max-width: 640px) {
+    .intro-guide-card {
+        width: calc(100vw - 32px);
+        max-width: 300px;
+        padding: 16px 14px 14px;
+    }
+    .intro-guide-card-below .intro-guide-arrow {
+        top: -24px;
+    }
+    .intro-guide-card-above .intro-guide-arrow {
+        bottom: -24px;
+    }
+}
+@media (min-width: 641px) {
+    .intro-guide-card {
+        width: 320px;
+        max-width: 320px;
+    }
+
+    .intro-guide-card-below .intro-guide-arrow {
+        top: -28px;
+        left: 34px;
+    }
+
+    .intro-guide-card-above .intro-guide-arrow {
+        bottom: -24px;
+        left: 34px;
+    }
+
+    .intro-guide-card h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .intro-guide-card p {
+        font-size: 15px;
+        line-height: 1.35;
+        margin-bottom: 14px;
+    }
+}
+
+.product-guide-overlay {
+    position: fixed;
+    inset: 0;
+    background: transparent;
+    z-index: 9998;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: .25s ease;
+}
+.product-guide-overlay.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+.product-guide-spotlight {
+    position: fixed;
+    border-radius: 24px;
+    box-shadow:
+        inset 0 0 0 3px #fff,
+        0 0 0 9999px rgba(18, 22, 33, 0.72);
+    z-index: 9999;
+    pointer-events: none;
+    box-sizing: border-box;
+}
+.product-guide-card {
+    position: fixed;
+    width: 280px;
+    max-width: calc(100vw - 32px);
+    color: #fff;
+    padding: 18px 16px 14px;
+    z-index: 10002;
+}
+.product-guide-arrow {
+    position: absolute;
+    left: 28px;
+    width: 2px;
+    height: 24px;
+    border-left: 2px dashed #fff;
+}
+.product-guide-arrow::before {
+    content: "";
+    position: absolute;
+    top: 18px;
+    left: -5px;
+    width: 8px;
+    height: 8px;
+    border-left: 2px dashed #fff;
+    border-bottom: 2px dashed #fff;
+    transform: rotate(-45deg);
+}
+.product-guide-card-below .product-guide-arrow {
+    top: -28px;
+}
+.product-guide-card-above .product-guide-arrow {
+    top: auto;
+    bottom: -24px;
+    transform: rotate(180deg);
+}
+.product-guide-btn {
+    min-width: 96px;
+    height: 38px;
+    border: none;
+    border-radius: 4px;
+    background: #4f79ff;
+    color: #fff;
+    font-weight: 700;
+}
+.product-guide-target {
+    position: relative;
+    z-index: 10001 !important;
+    animation: none !important;
+    transform: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.product-guide-open {
+    overflow-x: hidden;
+}
+.product-guide-dim {
+    opacity: 0.35;
+    filter: grayscale(25%);
+}
+@media (max-width: 640px) {
+    .product-guide-card {
+        width: calc(100vw - 32px);
+        max-width: 300px;
+        padding: 16px 14px 14px;
+    }
+    .product-guide-card-below .product-guide-arrow {
+        top: -24px;
+    }
+    .product-guide-card-above .product-guide-arrow {
+        bottom: -24px;
+    }
+}
+
+/* REVIEW GUIDE */
+.review-guide-overlay {
+    position: fixed;
+    inset: 0;
+    background: transparent;
+    z-index: 9998;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: .25s ease;
+}
+.review-guide-overlay.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+.review-guide-spotlight {
+    position: fixed;
+    border-radius: 16px;
+    box-shadow:
+        inset 0 0 0 3px #fff,
+        0 0 0 9999px rgba(18, 22, 33, 0.72);
+    z-index: 9999;
+    pointer-events: none;
+    box-sizing: border-box;
+}
+.review-guide-card {
+    position: fixed;
+    width: 280px;
+    max-width: calc(100vw - 32px);
+    color: #fff;
+    padding: 18px 16px 14px;
+    z-index: 10002;
+}
+.review-guide-arrow {
+    position: absolute;
+    left: 28px;
+    width: 2px;
+    height: 24px;
+    border-left: 2px dashed #fff;
+}
+.review-guide-arrow::before {
+    content: "";
+    position: absolute;
+    top: 18px;
+    left: -5px;
+    width: 8px;
+    height: 8px;
+    border-left: 2px dashed #fff;
+    border-bottom: 2px dashed #fff;
+    transform: rotate(-45deg);
+}
+.review-guide-card-below .review-guide-arrow {
+    top: -28px;
+}
+.review-guide-card-above .review-guide-arrow {
+    top: auto;
+    bottom: -24px;
+    transform: rotate(180deg);
+}
+.review-guide-btn {
+    min-width: 96px;
+    height: 38px;
+    border: none;
+    border-radius: 4px;
+    background: #4f79ff;
+    color: #fff;
+    font-weight: 700;
+}
+.review-guide-focus-target {
+    position: relative;
+    z-index: 10001 !important;
+    transform: none !important;
+    animation: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+.review-guide-open {
+    overflow-x: hidden;
+}
+.review-guide-dim {
+    opacity: 0.35;
+    filter: grayscale(25%);
+}
+
+/* PAYMENT STEP GUIDE */
+.payment-step-guide-card .payment-step-guide-arrow,
+.payment-step-guide-arrow {
+    position: absolute;
+    left: 28px;
+    width: 2px;
+    height: 24px;
+    border-left: 2px dashed #fff;
+}
+.payment-step-guide-arrow::before {
+    content: "";
+    position: absolute;
+    top: 18px;
+    left: -5px;
+    width: 8px;
+    height: 8px;
+    border-left: 2px dashed #fff;
+    border-bottom: 2px dashed #fff;
+    transform: rotate(-45deg);
+}
+.payment-step-guide-card-below .payment-step-guide-arrow {
+    top: -28px;
+}
+.payment-step-guide-card-above .payment-step-guide-arrow {
+    top: auto;
+    bottom: -24px;
+    transform: rotate(180deg);
+}
+.payment-step-guide-btn {
+    min-width: 96px;
+    height: 38px;
+    border: none;
+    border-radius: 4px;
+    background: #4f79ff;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(79, 121, 255, 0.26);
+}
+.payment-step-guide-open {
+    overflow-x: hidden;
+}
+.payment-step-guide-dim {
+    opacity: 0.35;
+    filter: grayscale(25%);
+}
+.payment-step-guide-target {
+    position: relative;
+    z-index: 10001 !important;
+    animation: none !important;
+    transform: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* RECEIPT GUIDE */
+.receipt-guide-overlay {
+    position: fixed;
+    inset: 0;
+    background: transparent;
+    z-index: 9998;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: .25s ease;
+}
+.receipt-guide-overlay.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+.receipt-guide-spotlight {
+    position: fixed;
+    border-radius: 16px;
+    box-shadow:
+        inset 0 0 0 3px #fff,
+        0 0 0 9999px rgba(18, 22, 33, 0.72);
+    z-index: 9999;
+    pointer-events: none;
+    box-sizing: border-box;
+}
+.receipt-guide-card {
+    position: fixed;
+    width: 280px;
+    max-width: calc(100vw - 32px);
+    color: #fff;
+    padding: 18px 16px 14px;
+    z-index: 10002;
+}
+.receipt-guide-arrow {
+    position: absolute;
+    left: 28px;
+    width: 2px;
+    height: 24px;
+    border-left: 2px dashed #fff;
+}
+.receipt-guide-arrow::before {
+    content: "";
+    position: absolute;
+    top: 18px;
+    left: -5px;
+    width: 8px;
+    height: 8px;
+    border-left: 2px dashed #fff;
+    border-bottom: 2px dashed #fff;
+    transform: rotate(-45deg);
+}
+.receipt-guide-card-below .receipt-guide-arrow {
+    top: -28px;
+}
+.receipt-guide-card-above .receipt-guide-arrow {
+    top: auto;
+    bottom: -24px;
+    transform: rotate(180deg);
+}
+.receipt-guide-btn {
+    min-width: 96px;
+    height: 38px;
+    border: none;
+    border-radius: 4px;
+    background: #4f79ff;
+    color: #fff;
+    font-weight: 700;
+}
+.receipt-guide-focus-target {
+    position: relative;
+    z-index: 10001 !important;
+    transform: none !important;
+    animation: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+.receipt-guide-open {
+    overflow-x: hidden;
+}
+.receipt-guide-dim {
+    opacity: 0.35;
+    filter: grayscale(25%);
+}
+
+@media (max-width: 640px) {
+    .review-guide-card,
+    .receipt-guide-card {
+        width: calc(100vw - 32px);
+        max-width: 300px;
+        padding: 16px 14px 14px;
+    }
+
+    .review-guide-card-below .review-guide-arrow,
+    .receipt-guide-card-below .receipt-guide-arrow,
+    .payment-step-guide-card-below .payment-step-guide-arrow {
+        top: -24px;
+    }
+
+    .review-guide-card-above .review-guide-arrow,
+    .receipt-guide-card-above .receipt-guide-arrow,
+    .payment-step-guide-card-above .payment-step-guide-arrow {
+        bottom: -24px;
     }
 }
